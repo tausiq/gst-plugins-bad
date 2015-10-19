@@ -68,6 +68,13 @@ typedef enum _QueueState {
   HAS_BUFFER_OR_STOP_REQUEST,
 } QueueState;
 
+typedef enum _ExposureMode {
+  AVCaptureExposureModeContinuousAutoExposure,
+  AVCaptureExposureModeLocked
+} ExposureMode;
+
+#define DEFAULT_EXPOSURE_MODE AVCaptureExposureModeContinuousAutoExposure
+
 #define gst_avf_video_src_parent_class parent_class
 G_DEFINE_TYPE (GstAVFVideoSrc, gst_avf_video_src, GST_TYPE_PUSH_SRC);
 
@@ -194,6 +201,28 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
   [super finalize];
 }
+
+#define GST_TYPE_EXPOSURE_MODE (gst_exposure_mode_get_type ())
+static GType
+gst_exposure_mode_get_type (void)
+{
+  static GType gst_exposure_mode_type = 0;
+
+  if (!gst_exposure_mode_type) {
+    static GEnumValue exposure_types[] = {
+      { AVCaptureExposureModeContinuousAutoExposure, "automatically adjusts the exposure level",    "auto" },
+      { AVCaptureExposureModeLocked,  "exposure level is fixed", "locked"  },
+      { 0, NULL, NULL },
+    };
+
+    gst_exposure_mode_type =
+	g_enum_register_static ("GstExposureMode",
+				exposure_types);
+  }
+
+  return gst_exposure_mode_type;
+}
+
 
 - (BOOL)openDeviceInput
 {
@@ -1076,6 +1105,7 @@ enum
   PROP_DEVICE_INDEX,
   PROP_DO_STATS,
   PROP_FPS,
+  PROP_EXPOSURE_MODE
 #if !HAVE_IOS
   PROP_CAPTURE_SCREEN,
   PROP_CAPTURE_SCREEN_CURSOR,
@@ -1155,6 +1185,11 @@ gst_avf_video_src_class_init (GstAVFVideoSrcClass * klass)
       g_param_spec_int ("fps", "Frames per second",
           "Last measured framerate, if statistics are enabled",
           -1, G_MAXINT, -1, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+g_object_class_install_property (gobject_class, PROP_EXPOSURE_MODE,
+    g_param_spec_enum ("exposure-mode", "Exposure mode",
+		       "Type of Exposure mode",
+                       GST_TYPE_EXPOSURE_MODE, AVCaptureExposureModeContinuousAutoExposure,
+                       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 #if !HAVE_IOS
   g_object_class_install_property (gobject_class, PROP_CAPTURE_SCREEN,
       g_param_spec_boolean ("capture-screen", "Enable screen capture",
