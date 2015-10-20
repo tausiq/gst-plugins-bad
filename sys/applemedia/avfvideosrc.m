@@ -1160,17 +1160,17 @@ gst_avf_video_src_class_init (GstAVFVideoSrcClass * klass)
           -1, G_MAXINT, -1, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 g_object_class_install_property (gobject_class, PROP_EXPOSURE_MODE,
     g_param_spec_enum ("exposure-mode", "Exposure mode",
-		       "Type of Exposure mode",
+		       "Type of Exposure mode", AVCaptureExposureModeContinuousAutoExposure,
                        AVCaptureExposureModeContinuousAutoExposure,
                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 g_object_class_install_property (gobject_class, PROP_FOCUS_MODE,
     g_param_spec_enum ("focus-mode", "Focus mode",
-		       "Type of Focus mode",
+		       "Type of Focus mode", AVCaptureFocusModeContinuousAutoFocus,
                        AVCaptureFocusModeContinuousAutoFocus,
                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 g_object_class_install_property (gobject_class, PROP_WHITE_BALANCE_MODE,
     g_param_spec_enum ("white-balance-mode", "White balance mode",
-		       "Type of White balance mode",
+		       "Type of White balance mode", AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance,
                        AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance,
                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 #if !HAVE_IOS
@@ -1412,4 +1412,3 @@ gst_avf_video_src_negotiate (GstBaseSrc * basesrc)
 
   return GST_BASE_SRC_CLASS (parent_class)->negotiate (basesrc);
 }
-
