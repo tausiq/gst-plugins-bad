@@ -1078,7 +1078,7 @@ enum
   PROP_FPS,
   PROP_EXPOSURE_MODE,
   PROP_FOCUS_MODE,
-  PROP_WHITE_BALANCE,
+  PROP_WHITE_BALANCE_MODE,
 #if !HAVE_IOS
   PROP_CAPTURE_SCREEN,
   PROP_CAPTURE_SCREEN_CURSOR,
@@ -1166,7 +1166,7 @@ g_object_class_install_property (gobject_class, PROP_EXPOSURE_MODE,
 g_object_class_install_property (gobject_class, PROP_FOCUS_MODE,
     g_param_spec_enum ("focus-mode", "Focus mode",
 		       "Type of Focus mode",
-                       AVCaptureFlashModeAuto,
+                       AVCaptureFocusModeContinuousAutoFocus,
                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 g_object_class_install_property (gobject_class, PROP_WHITE_BALANCE_MODE,
     g_param_spec_enum ("white-balance-mode", "White balance mode",
