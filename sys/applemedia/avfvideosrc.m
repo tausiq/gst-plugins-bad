@@ -1163,16 +1163,19 @@ g_object_class_install_property (gobject_class, PROP_EXPOSURE_MODE,
 		       "Type of Exposure mode", AVCaptureExposureModeContinuousAutoExposure,
                        AVCaptureExposureModeContinuousAutoExposure,
                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+       	GST_LOG ("Exposure mode: AVCaptureExposureModeContinuousAutoExposure");
 g_object_class_install_property (gobject_class, PROP_FOCUS_MODE,
     g_param_spec_enum ("focus-mode", "Focus mode",
 		       "Type of Focus mode", AVCaptureFocusModeContinuousAutoFocus,
                        AVCaptureFocusModeContinuousAutoFocus,
                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+        GST_LOG ("Focus mode: AVCaptureFocusModeContinuousAutoFocus");
 g_object_class_install_property (gobject_class, PROP_WHITE_BALANCE_MODE,
     g_param_spec_enum ("white-balance-mode", "White balance mode",
 		       "Type of White balance mode", AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance,
                        AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance,
                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+        GST_LOG ("White balance mode: AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance");              
 #if !HAVE_IOS
   g_object_class_install_property (gobject_class, PROP_CAPTURE_SCREEN,
       g_param_spec_boolean ("capture-screen", "Enable screen capture",
